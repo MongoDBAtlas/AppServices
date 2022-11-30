@@ -101,4 +101,74 @@ API Key를 활성화 하면 인증용 키를 발급 할 수 있습니다. 생성
 
 ## Vue JS Code
 생성한 App Services에 대한 설정을 한 후 Docker image를 생성 합니다.
- 
+환경 정보를 위해 .env 파일을 생성 하고 다음과 같이 작성 하여 줍니다.
+
+```` javascript
+VUE_APP_REALM_APP_ID=appservice-abcd
+VUE_APP_API_KEY=abcdefghijklmnopqrstuvwxyz
+```` 
+
+API_key는 App Services에서 생성한 Key 이며 VUE_APP_REALM_APP_ID은 생성한 App Services의 ID 입니다.
+이를 App Services에서 확인 할 수 있습니다.
+![Env](/vue-app/images/image09.png)
+
+App Services의 Function 과 UI의 호출은 App.vue의 106 라인에서 확인 할 수 있습니다.
+user.functions.*** 로 하여 호출 되며 해당 이름이 app services에 등록된 functions 이름과 동일 해야 합니다.
+```` javascript
+async getListOfUsers() {
+      const user: Realm.User = await app.logIn(credentials);
+      const listOfUser: Promise<IUser[]> = user.functions.getAllTasks();
+      listOfUser.then((resp) => {
+
+        console.log(resp);
+        this.users = resp;
+      });
+    },
+````
+
+데이터가 생성을 확인 하기 위해서는 components/Modal.vue에서 확인 할 수 있습니다.
+Functions에 등록된 이름과 파라미터가 순서대로 되어 있는지 확인 합니다.
+```` javascript
+ {
+        const create = user.functions.createUserTask(
+          this.task,
+          this.memo,
+          this.dueDate,
+          this.isImportant,
+          this.isCompleted,
+          this.priority,
+          this.title
+        );
+````
+
+Docker image 생성을 위해 docker-composer를 실행 하여 줍니다.
+
+```` shell
+$ docker build -t vuejs-app:1.0 .   
+[+] Building 54.6s (17/17) FINISHED                                                                                                                                           
+ => [internal] load build definition from Dockerfile                                                                                                                     0.0s
+ => => transferring dockerfile: 37B                                                                                                                                      0.0s
+ => [internal] load .dockerignore                                                                                                                                        0.0s
+ => => transferring context: 2B                                                                                                                                          0.0s
+ => [internal] load metadata for docker.io/library/nginx:alpine                                                                                                          1.8s
+ => [internal] load metadata for docker.io/library/node:lts-alpine                                                                                                       1.7s
+ => [internal] load build context                                                                                                                                       14.0s
+ => => transferring context: 298.98MB                                                                                                                                   13.8s
+ => [production-stage 1/5] FROM docker.io/library/nginx:alpine@sha256:455c39afebd4d98ef26dd70284aa86e6810b0485af5f4f222b19b89758cabf1e                                   0.0s
+ => [build-stage 1/6] FROM docker.io/library/node:lts-alpine@sha256:9eff44230b2fdcca57a73b8f908c8029e72d24dd05cac5339c79d3dedf6b208b                                     0.0s
+ => CACHED [build-stage 2/6] WORKDIR /app                                                                                                                                0.0s
+ => CACHED [build-stage 3/6] COPY package*.json ./                                                                                                                       0.0s
+ => CACHED [build-stage 4/6] RUN npm install                                                                                                                             0.0s
+ => [build-stage 5/6] COPY . .                                                                                                                                           5.0s
+ => [build-stage 6/6] RUN npm run build                                                                                                                                 32.9s
+ => CACHED [production-stage 2/5] RUN rm -rf /usr/share/nginx/html/*                                                                                                     0.0s 
+ => CACHED [production-stage 3/5] COPY --from=build-stage /app/dist /usr/share/nginx/html                                                                                0.0s 
+ => CACHED [production-stage 4/5] RUN rm /etc/nginx/conf.d/default.conf                                                                                                  0.0s 
+ => CACHED [production-stage 5/5] COPY docker/nginx/nginx.conf /etc/nginx/conf.d                                                                                         0.0s 
+ => exporting to image                                                                                                                                                   0.0s 
+ => => exporting layers                                                                                                                                                  0.0s 
+ => => writing image sha256:14319c4bdeabf7afdd458c384cb88d838ae2acb0fa962231767abad8fed18f50                                                                             0.0s
+ => => naming to docker.io/library/vuejs-app:1.0                                                                                                                         0.0s
+
+Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them
+````
