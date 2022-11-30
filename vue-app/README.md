@@ -99,7 +99,6 @@ Authentication 메뉴에서 Authencation Providers에서 API Keys를 활성화 �
 API Key를 활성화 하면 인증용 키를 발급 할 수 있습니다. 생성된 이후 다시 키를 조회 할 수 없음으로 주의하여 보관하여야 합니다.
 ![API Key](/vue-app/images/image08.png)
 
-
-
-## Mobile Device Sync
-Flutter를 이용해 개발된 모바일 애플리케이션과 Atlas 간의 자동으로 데이터를 동기화 하여 줍니다.ion 
+## Vue JS Code
+생성한 App Services에 대한 설정을 한 후 Docker image를 생성 합니다.
+ 
