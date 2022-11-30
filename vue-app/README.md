@@ -181,6 +181,8 @@ App Settings 메뉴를 클릭 하면 Allowed Request Origins를 등록 할 수 �
 ![Env](/vue-app/images/image10.png)
 
 
+Docker 컨테이너를 수행 하여 줍니다. 컨테이너는 8080 포트로 nginx로 서비하도록 되어 있습니다. 일반 http 포트(80)으로 서비스 하기 위해 포트 매핑을 하여 줍니다. (해당 포트가 사용 중인 경우 다른 포트 사용이 가능 합니다. 이 경우 CORS의 origin에 포트를 포함한 주소를 기록해야 합니다.)
+
 
 ```` shell
 $ docker run -it -p 80:8080 vuejs-app:1.0
