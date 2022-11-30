@@ -172,3 +172,35 @@ $ docker build -t vuejs-app:1.0 .
 
 Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them
 ````
+
+Docker를 실행 하기 전에 CROS를 허용 하여 주기 위해 App Services로 들어 갑니다.
+App Settings 메뉴를 클릭 하면 Allowed Request Origins를 등록 할 수 있습니다. Vuejs-app가 실행 되는 서버의 IP를 등록 하여 줍니다. 
+
+![Env](/vue-app/images/image10.png)
+
+
+
+```` shell
+$ docker run -it -p 80:8080 vuejs-app:1.0
+/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+10-listen-on-ipv6-by-default.sh: info: /etc/nginx/conf.d/default.conf is not a file or does not exist
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+/docker-entrypoint.sh: Configuration complete; ready for start up
+2022/11/30 05:54:50 [notice] 1#1: using the "epoll" event method
+2022/11/30 05:54:50 [notice] 1#1: nginx/1.23.1
+2022/11/30 05:54:50 [notice] 1#1: built by gcc 11.2.1 20220219 (Alpine 11.2.1_git20220219) 
+2022/11/30 05:54:50 [notice] 1#1: OS: Linux 5.4.17-2136.310.7.1.el8uek.x86_64
+2022/11/30 05:54:50 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/11/30 05:54:50 [notice] 1#1: start worker processes
+2022/11/30 05:54:50 [notice] 1#1: start worker process 22
+2022/11/30 05:54:50 [notice] 1#1: start worker process 23
+175.196.74.118 - - [30/Nov/2022:05:55:17 +0000] "GET / HTTP/1.1" 200 852 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36" "-"
+175.196.74.118 - - [30/Nov/2022:05:55:17 +0000] "GET / HTTP/1.1" 200 852 "http://222.122.119.105/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36" "-"
+````
+
+![Web App](/vue-app/images/image11.png)
+
+데이터 생성 및 수정의 정상 동작 여부를 확인 합니다.
