@@ -6,6 +6,21 @@ Atlas의 App Services를 이용한 웹 애플리케이션과 모바일 애플리
 
 ![Architecture](/images/image01.png)
 
+애플리케이션은 Task를 등록 하는 것으로 컬렉션 이름은 userTask로 하여 줍니다.
+데이터는 다음과 같은 형태로 등록 하여 줍니다.
+
+````json
+ {
+    dueDate: '2022-11-25',
+    isCompleted: false,
+    isImportant: true,
+    memo: 'Building Mobile Application with Flutter SDK',
+    priority: 'top',
+    task: 'Writing up what is App Services',
+    title: 'Preparing MongoDB Day'
+  }
+````
+
 ## Serverless Back end (Functions)
 Vue로 개발된 UI를 Docker를 이용하여 배포 하며 App Service의 Function을 호출하여 데이터를 처리 합니다.
 

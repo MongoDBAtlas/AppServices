@@ -1,7 +1,8 @@
 <img src="https://companieslogo.com/img/orig/MDB_BIG-ad812c6c.png?t=1648915248" width="50%" title="Github_Logo"/> <br>
 
 # Mobile Device Sync
-Moboile 애플리케이션을 위한 Backend Application Service로 Mobile 애플리케이션이 사용하는 내장 데이터 베이스 Realm과 Atlas 간의 데이터 동기화 서비스를 제공합니다. Mobile 애플리케이션에서 생성, 변경되는 데이터에 대한 백엔드로 전달을 책임져 줌으로 Mobile 애플리케이션의 개발 복잡도를 해소 하여 줍니다. 관련된 서비스는 데이터 동기화를 위한 기본 서비스 Device Sync 및 동기화 필드 권한 체크 등을 위한 Access Rule관리를 포함 합니다.
+Moboile 애플리케이션을 위한 Backend Application Service로 Mobile 애플리케이션이 사용하는 내장 데이터 베이스 Realm과 Atlas 간의 데이터 동기화 서비스를 제공합니다.    
+Mobile 애플리케이션에서 생성, 변경되는 데이터에 대한 백엔드로 전달을 책임져 줌으로 Mobile 애플리케이션의 개발 복잡도를 해소 하여 줍니다. 관련된 서비스는 데이터 동기화를 위한 기본 서비스 Device Sync 및 동기화 필드 권한 체크 등을 위한 Access Rule관리를 포함 합니다.    
 
 ![Architecture](/mobile-app/images/image01.png)
 
@@ -12,11 +13,14 @@ Atlas Console에 로그인 후 App Services Tab에서 새로운 Application을 �
 
 Data Access 메뉴 중 Rules를 선택 하면 연결 가능한 컬레션의 리스트를 볼 수 있습니다. 대상 컬렉션을 선택 후 readAndWriteAll 권한을 추가 하여 줍니다.
 
+
 ![Rules](/mobile-app/images/image02.png)
+
 
 저장 후 Add present role을 하고 나서 배포 하여 줍니다.
 
 저장 후 각 동기화 과정에서 필드별 권한 관리를 위해 Schema를 선택 후 Generate a Schema를 수행합니다.
+
 
 ![Schema](/mobile-app/images/image03.png)
 
@@ -62,21 +66,23 @@ Data Access 메뉴 중 Rules를 선택 하면 연결 가능한 컬레션의 리�
 
 설정 정보를 저장 합니다.
 
-연결된 데이터를 저장 하기 위한 권한 설정이 완료 되었음으로 Device Sync에서 동기화를 설정 합니다.
+연결된 데이터를 저장 하기 위한 권한 설정이 완료 되었음으로 Device Sync에서 동기화를 설정 합니다.     
 Device Sync 에서 Enable Syncing을 선택 합니다.
 
 ![DeviceSync](/mobile-app/images/image04.png)
 
-Schema 는 기존에 생성하였음으로 생성하지 않는 옵션으로 선택 합니다.
+Schema는 기존에 생성하였음으로 생성하지 않는 옵션으로 선택 합니다.
 
 동기화 옵션을 Flexible을 선택 합니다. 동기화 대상 클러스터를 선택 합니다.
 
 동기화를 위한 Query 가능한 필드를 선택합니다. 조회 조건으로 isCompleted, isImportant를 추가해 줍니다. 애플리케이션에서 해당 조건으로 검색된 결과를 보여주기 위함입니다.
 
+
 ![DeviceSyncQuery](/mobile-app/images/image05.png)
 
 마지막으로 읽기 쓰기 권한 설정을 합니다.
 전체 데이터에 대해 읽기 스기를 진행 할 것임으로 Users can read and write all data 를 선택 합니다.
+
 
 ![DeviceSyncQuery](/mobile-app/images/image06.png)
 
@@ -84,10 +90,11 @@ Schema 는 기존에 생성하였음으로 생성하지 않는 옵션으로 선�
 
 저장이 완료 되면 동기화가 진행 되며 상단에 상태 정보가 나오며 동기화를 중단 혹은 중지 시킬 수 있습니다.
 
+
 ![DeviceSyncQuery](/mobile-app/images/image07.png)
 
 ## Flutter Application
-Android Studio를 설치 하고 프로젝트를 로드 합니다.
+Android Studio를 설치 하고 프로젝트를 로드 합니다.     
 Device Sync와 연결을 위해 AppService ID를 /lib/main.dart 에 등록 하여 줍니다.
 
 ````dart
@@ -109,6 +116,7 @@ void main() async {
 
 또한 로그인 관련 정보를 수정 하여 줍니다. 기존 vue-app 에서 API-key를 생성 하였음으로 이를 활용 합니다. (Anonymous를 이용 하는 것도 가능하며 별도 로그인 화면을 구성하여 ID/Password로 로그인 하도록 할 수 있습니다.)
 
+
 ````dart
 Future<Realm> createRealm(String appId, CollectionType collectionType) async {
   final appConfig = AppConfiguration(appId);
@@ -129,12 +137,18 @@ Future<Realm> createRealm(String appId, CollectionType collectionType) async {
 ![Android](/mobile-app/images/image08.png)
 
 하단의 두번재 메뉴를 클릭하면 리스트로 데이터를 조회 할 수 있습니다.
+
+
 ![Android](/mobile-app/images/image09.png)
 
 리스트 한건을 클릭 하면 상세 정보와 삭제가 가능한 화면을 볼수 있습니다.
+
+
 ![Android](/mobile-app/images/image10.png)
 
 하단의 +버튼을 클릭 하면 새로운 데이터를 생성할 수 있습니다. 데이터가 생성되면 데이터가 동기화되어 Atlas에 데이터가 등록 됩니다.
 
-데모영상
+데모영상  
+
+
 [![Watch the video](/mobile-app/images/image11.png)](https://youtu.be/84KlOODFJpk)
