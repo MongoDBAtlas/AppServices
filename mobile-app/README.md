@@ -137,4 +137,4 @@ Future<Realm> createRealm(String appId, CollectionType collectionType) async {
 하단의 +버튼을 클릭 하면 새로운 데이터를 생성할 수 있습니다. 데이터가 생성되면 데이터가 동기화되어 Atlas에 데이터가 등록 됩니다.
 
 데모영상
-[![Watch the video](/mobile-app/images/image11.png)](/mobile-app/images/demo.mp4)
+[![Watch the video](/mobile-app/images/image11.png)](https://youtu.be/84KlOODFJpk)
